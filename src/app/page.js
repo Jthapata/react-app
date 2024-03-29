@@ -1,7 +1,11 @@
-import Image from "next/image";
+import CryptoList from "@/components/CryptoList";
+import Header from "../components/Header"
 
 export default function Home() {
   return (
-    <div>test</div>
+    <>
+      <Header />
+      <CryptoList />
+    </>
   );
 }
