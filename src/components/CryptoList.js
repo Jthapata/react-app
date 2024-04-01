@@ -3,11 +3,10 @@ import { useEffect, useState } from "react";
 
 export default function CryptoList () {
     const [list, setList] = useState(null)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        setLoading(true)
         async function getCryptos() {
             const url = 'https://api.coincap.io/v2/assets'
             try {
@@ -17,38 +16,39 @@ export default function CryptoList () {
                 }
                 const response = await fetch(url, requestOptions)
                 const data = await response.json()
-                const cryptoData = data.data
-                console.log(cryptoData[0])
+                setList(data.data)
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setError(error)
+            } finally  {
+                setLoading(false)
+                console.log(list)
             }
         }
         getCryptos()
-        setLoading(false)
     }, [])
 
     if (loading) {
         return (
-            <div>Loading...</div>
+            <h1>Loading...</h1>
         )
     }
     if (error) {
         return (
-            <div>Error</div>
+            <h1>Error Loading Data</h1>
         )
     }
 
     return (
         <div>
             test
-            {/* <ul>
-                {list.map((coin) => {
+            <ul>
+                {list && list.map((coin) => {
                     <li key={coin.id}>
                         {coin.name}
                     </li>
                 })}
-            </ul> */}
+            </ul>
         </div>
     )
 }
