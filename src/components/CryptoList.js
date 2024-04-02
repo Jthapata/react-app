@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 
 export default function CryptoList () {
-    const [list, setList] = useState(null)
+    const [list, setList] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
@@ -14,19 +14,25 @@ export default function CryptoList () {
                     method: 'GET',
                     redirect: 'follow'
                 }
-                const response = await fetch(url, requestOptions)
+                const response = await fetch('https://api.coincap.io/v2/assets', requestOptions)
                 const data = await response.json()
-                setList(data.data)
+                let cryptoData = await data.data
+                cryptoData.forEach(element => {
+                    setList((prevList) => [...prevList, element]);
+                });
+                setLoading(false)
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setError(error)
-            } finally  {
                 setLoading(false)
-                console.log(list)
             }
         }
         getCryptos()
     }, [])
+
+    useEffect((list) => {
+        console.log(list)
+    }, [list])
 
     if (loading) {
         return (
