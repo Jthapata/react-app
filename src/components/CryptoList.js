@@ -1,5 +1,4 @@
 'use client'
-import { Crushed } from "next/font/google";
 import { useEffect, useState } from "react";
 
 export default function CryptoList () {
@@ -28,10 +27,6 @@ export default function CryptoList () {
         getCryptos()
     }, [])
 
-    useEffect(() => {
-        console.log(list)
-    }, [list])
-
     if (loading) {
         return (
             <div className="flex-grow flex flex-col items-center border-black rounded-sm bg-slate-500 text-white p-3">
@@ -46,7 +41,6 @@ export default function CryptoList () {
             </div>
         )
     }
-
     return (
         <div className="flex-grow flex flex-col items-center bg-slate-500 text-white p-3">
             <table>
@@ -58,7 +52,7 @@ export default function CryptoList () {
                     <th className="p-3">Market Cap</th>
                 </tr>
                 {Object.keys(list).map((key) => (
-                    <tr id={list[key].id} className="border hover:cursor-pointer">
+                    <tr id={list[key].id} className="border hover:cursor-pointer text-center">
                         <td className="p-3">{list[key].name}</td>
                         <td className="p-3">{list[key].symbol}</td>
                         <td className="p-3">${Number(list[key].priceUsd.slice(0,8))}</td>
@@ -70,7 +64,6 @@ export default function CryptoList () {
         </div>
     )
 }
-
 
 // changePercent24Hr:"-5.3769653963268705"
 // explorer:"https://blockchain.info/"
