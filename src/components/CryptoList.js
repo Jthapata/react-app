@@ -34,24 +34,39 @@ export default function CryptoList () {
 
     if (loading) {
         return (
-            <h1>Loading...</h1>
+            <div className="flex-grow flex flex-col items-center border-black rounded-sm bg-slate-500 text-white p-3">
+                <h1>Loading...</h1>
+            </div>
         )
     }
     if (error) {
         return (
-            <h1>Error Loading Data</h1>
+            <div className="flex-grow flex flex-col items-center border-black rounded-sm bg-slate-500 text-white p-3">
+                <h1>Error Loading Data</h1>
+            </div>
         )
     }
 
     return (
-        <div>
-            <ul>
+        <div className="flex-grow flex flex-col items-center bg-slate-500 text-white p-3">
+            <table>
+                <tr className="bg-slate-600">
+                    <th className="p-3">Name</th>
+                    <th className="p-3">Symbol</th>
+                    <th className="p-3">Price</th>
+                    <th className="p-3">24hrs</th>
+                    <th className="p-3">Market Cap</th>
+                </tr>
                 {Object.keys(list).map((key) => (
-                    <li key={key}>
-                        {list[key].name} --- {list[key].priceUsd}
-                    </li>
+                    <tr id={list[key].id} className="border hover:cursor-pointer">
+                        <td className="p-3">{list[key].name}</td>
+                        <td className="p-3">{list[key].symbol}</td>
+                        <td className="p-3">${Number(list[key].priceUsd.slice(0,8))}</td>
+                        <td className="p-3">{Number(list[key].changePercent24Hr).toFixed(2)}%</td>
+                        <td className="p-3">${Number(list[key].marketCapUsd).toFixed(2)}</td>
+                    </tr>
                 ))}
-            </ul>
+            </table>
         </div>
     )
 }
