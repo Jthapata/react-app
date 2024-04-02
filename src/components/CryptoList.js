@@ -1,14 +1,14 @@
 'use client'
+import { Crushed } from "next/font/google";
 import { useEffect, useState } from "react";
 
 export default function CryptoList () {
-    const [list, setList] = useState([])
+    const [list, setList] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
     useEffect(() => {
         async function getCryptos() {
-            const url = 'https://api.coincap.io/v2/assets'
             try {
                 const requestOptions = {
                     method: 'GET',
@@ -16,10 +16,8 @@ export default function CryptoList () {
                 }
                 const response = await fetch('https://api.coincap.io/v2/assets', requestOptions)
                 const data = await response.json()
-                let cryptoData = await data.data
-                cryptoData.forEach(element => {
-                    setList((prevList) => [...prevList, element]);
-                });
+                const cryptoData = await data.data
+                setList(cryptoData)
                 setLoading(false)
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -30,7 +28,7 @@ export default function CryptoList () {
         getCryptos()
     }, [])
 
-    useEffect((list) => {
+    useEffect(() => {
         console.log(list)
     }, [list])
 
@@ -47,14 +45,27 @@ export default function CryptoList () {
 
     return (
         <div>
-            test
             <ul>
-                {list && list.map((coin) => {
-                    <li key={coin.id}>
-                        {coin.name}
+                {Object.keys(list).map((key) => (
+                    <li key={key}>
+                        {list[key].name} --- {list[key].priceUsd}
                     </li>
-                })}
+                ))}
             </ul>
         </div>
     )
 }
+
+
+// changePercent24Hr:"-5.3769653963268705"
+// explorer:"https://blockchain.info/"
+// id:"bitcoin"
+// marketCapUsd:"1318279914023.0193772396816914"
+// maxSupply:"21000000.0000000000000000"
+// name:"Bitcoin"
+// priceUsd:"67017.3117572066251122"
+// rank:"1"
+// supply:"19670737.0000000000000000"
+// symbol:"BTC"
+// volumeUsd24Hr:"12001168633.3493137033747581"
+// vwap24Hr:"69337.5785022222726017"
