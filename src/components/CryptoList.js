@@ -6,6 +6,10 @@ export default function CryptoList () {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
+    function handleClick(key) {
+        console.log(key)
+    }
+
     useEffect(() => {
         async function getCryptos() {
             try {
@@ -43,23 +47,27 @@ export default function CryptoList () {
     }
     return (
         <div className="flex-grow flex flex-col items-center bg-slate-500 text-white p-3">
-            <table>
-                <tr className="bg-slate-600">
-                    <th className="p-3">Name</th>
-                    <th className="p-3">Symbol</th>
-                    <th className="p-3">Price</th>
-                    <th className="p-3">24hrs</th>
-                    <th className="p-3">Market Cap</th>
-                </tr>
-                {Object.keys(list).map((key) => (
-                    <tr id={list[key].id} className="border hover:cursor-pointer text-center">
-                        <td className="p-3">{list[key].name}</td>
-                        <td className="p-3">{list[key].symbol}</td>
-                        <td className="p-3">${Number(list[key].priceUsd.slice(0,8))}</td>
-                        <td className="p-3">{Number(list[key].changePercent24Hr).toFixed(2)}%</td>
-                        <td className="p-3">${Number(list[key].marketCapUsd).toFixed(2)}</td>
+            <table className="border">
+                <thead>
+                    <tr className="bg-slate-600">
+                        <th className="p-3">Name</th>
+                        <th className="p-3">Symbol</th>
+                        <th className="p-3">Price</th>
+                        <th className="p-3">24hrs</th>
+                        <th className="p-3">Market Cap</th>
                     </tr>
-                ))}
+                </thead>
+                <tbody>
+                    {Object.keys(list).map((key) => (
+                        <tr id={list[key].id} className="hover:cursor-pointer hover:border text-center" onClick={() => handleClick(list[key].id)}>
+                            <td className="p-3">{list[key].name}</td>
+                            <td className="p-3">{list[key].symbol}</td>
+                            <td className="p-3">${Number(list[key].priceUsd.slice(0,8))}</td>
+                            <td className="p-3">{Number(list[key].changePercent24Hr).toFixed(2)}%</td>
+                            <td className="p-3">${Number(list[key].marketCapUsd).toFixed(2)}</td>
+                        </tr>
+                    ))}
+                </tbody>
             </table>
         </div>
     )
