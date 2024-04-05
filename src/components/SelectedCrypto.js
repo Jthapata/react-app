@@ -46,7 +46,7 @@ export default function CryptoList (props) {
         <div className="flex-grow flex flex-col items-center bg-slate-500 text-white p-3">
             <div className="p-3">{coin.name}</div>
             <div className="p-3">{coin.symbol}</div>
-            <div className="p-3">${Number(coin.priceUsd.slice(0,8))}</div>
+            <div className="p-3">${Number(coin.priceUsd)}</div>
             <div className="p-3">{Number(coin.changePercent24Hr).toFixed(2)}%</div>
             <div className="p-3">${Number(coin.marketCapUsd).toFixed(2)}</div>
         </div>
