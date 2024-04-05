@@ -1,15 +1,14 @@
 'use client'
 import { useEffect, useState } from "react";
 
-export default function CryptoList () {
+export default function CryptoList (props) {
     const [list, setList] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
-    function handleClick(key) {
-        console.log(key)
+    function handleClick(id) {
+        props.setCryptoSelected(id)
     }
-
     useEffect(() => {
         async function getCryptos() {
             try {
@@ -59,7 +58,7 @@ export default function CryptoList () {
                 </thead>
                 <tbody>
                     {Object.keys(list).map((key) => (
-                        <tr id={list[key].id} className="hover:cursor-pointer hover:border text-center" onClick={() => handleClick(list[key].id)}>
+                        <tr key={list[key].id} className="hover:cursor-pointer hover:border text-center" onClick={() => handleClick(list[key].id)}>
                             <td className="p-3">{list[key].name}</td>
                             <td className="p-3">{list[key].symbol}</td>
                             <td className="p-3">${Number(list[key].priceUsd.slice(0,8))}</td>
