@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
+import Graph from "./Graph";
 
 export default function CryptoList (props) {
     const [loading, setLoading] = useState(true)
@@ -49,6 +50,8 @@ export default function CryptoList (props) {
             <div className="p-3">${Number(coin.priceUsd)}</div>
             <div className="p-3">{Number(coin.changePercent24Hr).toFixed(2)}%</div>
             <div className="p-3">${Number(coin.marketCapUsd).toFixed(2)}</div>
+            <br></br>
+            <Graph />
         </div>
     )
 }
