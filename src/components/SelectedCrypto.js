@@ -6,7 +6,7 @@ function formatDate(timestamp) {
     const dateObj = new Date(timestamp)
     const hours = dateObj.getHours()
     const minutes = dateObj.getMinutes().toString().padStart(2, '0')
-    const amPm = hours < 12 ? 'AM' : hours === 12 ? 'PM' : 'PM'
+    const amPm = hours < 13 ? 'AM' : 'PM'
     return `${hours % 12 || 12}:${minutes} ${amPm}`
 }
 
