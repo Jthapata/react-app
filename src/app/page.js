@@ -3,6 +3,7 @@ import CryptoList from "@/components/CryptoList";
 import SelectedCrypto from "@/components/SelectedCrypto"
 import Header from "../components/Header"
 import { useState } from "react";
+import { TurnOffDefaultPropsWarning } from "@/components/RechartsError";
 
 export default function Home() {
   const [cryptoSelected, setCryptoSelected] = useState(null)
@@ -12,6 +13,7 @@ export default function Home() {
       <div className="min-h-screen min-w-screen flex flex-col">
         <Header />
         <SelectedCrypto id={cryptoSelected} />
+        <TurnOffDefaultPropsWarning />
       </div>
   )
   }

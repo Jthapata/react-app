@@ -2,10 +2,19 @@
 import { useEffect, useState } from "react";
 import Graph from "./Graph";
 
+function formatDate(timestamp) {
+    const dateObj = new Date(timestamp)
+    const hours = dateObj.getHours()
+    const minutes = dateObj.getMinutes().toString().padStart(2, '0')
+    const amPm = hours < 12 ? 'AM' : hours === 12 ? 'PM' : 'PM'
+    return `${hours % 12 || 12}:${minutes} ${amPm}`
+}
+
 export default function CryptoList (props) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
     const [coin, setCoin] = useState(null)
+    const [history, setHistory] = useState([])
 
     useEffect(() => {
         async function getCryptos() {
@@ -26,7 +35,29 @@ export default function CryptoList (props) {
                 setLoading(false)
             }
         }
+        async function getCryptoHistory() {
+            try {
+                const historyUrl = `https://api.coincap.io/v2/assets/${props.id}/history?interval=m1`
+                const requestOptions = {
+                    method: 'GET',
+                    redirect: 'follow'
+                }
+                const response = await fetch(historyUrl, requestOptions)
+                const data = await response.json()
+                const coinHistory = await data.data.slice(-14)
+                coinHistory.forEach(item => {
+                    item.time = formatDate(item.time);
+                });
+                setHistory(coinHistory)
+                setLoading(false)
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setError(error)
+                setLoading(false)
+            }
+        }
         getCryptos()
+        getCryptoHistory()
     }, [])
 
     if (loading) {
@@ -51,7 +82,7 @@ export default function CryptoList (props) {
             <div className="p-3">{Number(coin.changePercent24Hr).toFixed(2)}%</div>
             <div className="p-3">${Number(coin.marketCapUsd).toFixed(2)}</div>
             <br></br>
-            <Graph />
+            <Graph data={ history }/>
         </div>
     )
 }
