@@ -22,13 +22,10 @@ export default function Graph( props ) {
             min = price
         }
     }
-    const graphMax = Number(Math.round((max + ((max-min)/3)) * 100000000) / 100000000).toString().slice(0, 10)
-    const graphMin = Number(Math.round((min - ((max-min)/3)) * 100000000) / 100000000).toString().slice(0, 10)
-    console.log(graphMax, graphMin)
     return (
         <LineChart width={800} height={300} data={props.data} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
             <XAxis dataKey="time" stroke="white" />
-            <YAxis stroke="white" domain={[graphMin, graphMax]} ticks={[graphMin, min, max, graphMax]} type="number" unit='$' width={100}/>
+            <YAxis stroke="white" domain={['auto', 'auto']} width={200}/>
             <Tooltip />
             <Line type="monotone" dataKey="priceUsd" stroke="#EF4444" activeDot={{ r: 8 }} />
         </LineChart>
