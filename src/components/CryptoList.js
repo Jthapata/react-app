@@ -1,14 +1,12 @@
 'use client'
 import { useEffect, useState } from "react";
+import Link from 'next/link'
 
-export default function CryptoList (props) {
+export default function CryptoList () {
     const [list, setList] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
 
-    function handleClick(id) {
-        props.setCryptoSelected(id)
-    }
     useEffect(() => {
         async function getCryptos() {
             try {
@@ -58,8 +56,10 @@ export default function CryptoList (props) {
                 </thead>
                 <tbody>
                     {Object.keys(list).map((key) => (
-                        <tr key={list[key].id} className="hover:cursor-pointer hover:border text-center" onClick={() => handleClick(list[key].id)}>
-                            <td className="p-3">{list[key].name}</td>
+                        <tr key={list[key].id} className="hover:border text-center">
+                            <Link href={`/${list[key].id}`}>
+                                <td className="p-3">{list[key].name}</td>
+                            </Link>
                             <td className="p-3">{list[key].symbol}</td>
                             <td className="p-3">${Number(list[key].priceUsd.slice(0,8))}</td>
                             <td className="p-3">{Number(list[key].changePercent24Hr).toFixed(2)}%</td>
