@@ -16,53 +16,39 @@ export default function CryptoList (props) {
     const [coin, setCoin] = useState(null)
     const [history, setHistory] = useState([])
 
-    useEffect(() => {
-        console.log(coin)
-    }, [coin])
+    async function getCoinData() {
+        try {
+            const coinUrl = `https://api.coincap.io/v2/assets/${props.id}`;
+            const requestOptions = {
+                method: 'GET',
+                redirect: 'follow'
+            };
+            const response = await fetch(coinUrl, requestOptions);
+            const data = await response.json();
+            const coinData = data.data;
+            setCoin(coinData);
+        
+            const historyUrl = `${coinUrl}/history?interval=m1`;
+            const historyResponse = await fetch(historyUrl, requestOptions);
+            const historyData = await historyResponse.json();
+            const coinHistory = historyData.data.slice(-15);
+            coinHistory.forEach(item => (item.time = formatDate(item.time)));
+            setHistory(coinHistory);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setError(error);
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
-        async function getCryptos() {
-            try {
-                const coinUrl = `https://api.coincap.io/v2/assets/${props.id}`
-                const requestOptions = {
-                    method: 'GET',
-                    redirect: 'follow'
-                }
-                const response = await fetch(coinUrl, requestOptions)
-                const data = await response.json()
-                const coinData = await data.data
-                setCoin(coinData)
-                setLoading(false)
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setError(error)
-                setLoading(false)
-            }
-        }
-        async function getCryptoHistory() {
-            try {
-                const historyUrl = `https://api.coincap.io/v2/assets/${props.id}/history?interval=m1`
-                const requestOptions = {
-                    method: 'GET',
-                    redirect: 'follow'
-                }
-                const response = await fetch(historyUrl, requestOptions)
-                const data = await response.json()
-                const coinHistory = await data.data.slice(-14)
-                coinHistory.forEach(item => {
-                    item.time = formatDate(item.time);
-                });
-                setHistory(coinHistory)
-                setLoading(false)
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setError(error)
-                setLoading(false)
-            }
-        }
-        getCryptos()
-        getCryptoHistory()
-    }, [])
+        const fetchData = async () => {
+            await getCoinData();
+        };
+        fetchData();
+    }, [props.id]);
+      
 
     if (loading) {
         return (

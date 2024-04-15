@@ -57,9 +57,7 @@ export default function CryptoList () {
                 <tbody>
                     {Object.keys(list).map((key) => (
                         <tr key={list[key].id} className="hover:border text-center">
-                            <Link href={`/${list[key].id}`}>
-                                <td className="p-3">{list[key].name}</td>
-                            </Link>
+                            <td className="p-3"><Link href={`/${list[key].id}`}>{list[key].name}</Link></td>
                             <td className="p-3">{list[key].symbol}</td>
                             <td className="p-3">${Number(list[key].priceUsd.slice(0,8))}</td>
                             <td className="p-3">{Number(list[key].changePercent24Hr).toFixed(2)}%</td>

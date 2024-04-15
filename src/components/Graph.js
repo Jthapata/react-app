@@ -2,14 +2,18 @@ import * as React from 'react';
 import { LineChart} from '@mui/x-charts';
 
 export default function Graph(props) {
-    console.log(props.id)
+    let priceUsd = []
+    let times = []
+    for (let item of props.data) {
+        priceUsd.push(item.priceUsd)
+        times.push(item.time)
+    }
     return (
         <LineChart
-            width={500}
+            series = {[{ data: [...priceUsd] }]}
+            xAxis={[{ data: [...times], scaleType: 'point'}]}
+            width={600}
             height={300}
-            xAxis={{ dataKey: 'time', title: 'Time' }} // Define x-axis with label
-            yAxis={{ dataKey: 'priceUsd', title: 'Price' }} // Add y-axis label (replace with your desired label)
-            dataset={[...props.id]}
         />
     );
 }
