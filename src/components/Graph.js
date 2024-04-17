@@ -10,6 +10,9 @@ export default function Graph(props) {
     }
     return (
         <LineChart
+            options={{
+                showMark: false
+            }}
             sx={{
                 "& .MuiChartsAxis-left .MuiChartsAxis-tickLabel":{
                     strokeWidth:1,
@@ -26,6 +29,9 @@ export default function Graph(props) {
                 "& .MuiChartsAxis-left .MuiChartsAxis-line":{
                     stroke:"#a222dd",
                     strokeWidth:1
+                },
+                "& .MuiChartsTooltip-mark": {
+                    display: "none",
                 }
             }}
             series = {[{ data: [...priceUsd], color: '#a222dd'}]}

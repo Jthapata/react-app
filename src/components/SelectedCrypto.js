@@ -26,13 +26,12 @@ export default function CryptoList (props) {
             const response = await fetch(coinUrl, requestOptions);
             const data = await response.json();
             const coinData = data.data;
-            console.log(coinData)
             setCoin(coinData);
         
             const historyUrl = `${coinUrl}/history?interval=m1`;
             const historyResponse = await fetch(historyUrl, requestOptions);
             const historyData = await historyResponse.json();
-            const coinHistory = historyData.data.slice(-15);
+            const coinHistory = historyData.data.slice(-30);
             coinHistory.forEach(item => (item.time = formatDate(item.time)));
             setHistory(coinHistory);
             setLoading(false);
@@ -67,21 +66,32 @@ export default function CryptoList (props) {
     }
     return (
         <div className="flex-grow flex flex-col items-center bg-background text-text p-3">
-            <div className="flex p-2">
-                <div id="card" className="m-3 border rounded-lg">
-                    <h1 className="text-3xl p-3">{coin.name} ({coin.symbol})</h1>
-                    <p>${Number(coin.priceUsd.slice(0,8))}</p>
-                    <p>{Number(coin.changePercent24Hr).toFixed(2)}%</p>
+            <div className="flex">
+                <div className="m-3 h-52 flex flex-col justify-center border rounded-lg shadow-[0px_0px_5px_0px_rgba(255,255,255)]">
+                    <h1 className="text-5xl p-4">{coin.name} ({coin.symbol})</h1>
+                    <div className="flex justify-around p-3">
+                        <p className="text-2xl">${Number(coin.priceUsd.slice(0,8))}</p>
+                        <p className="text-2xl">{Number(coin.changePercent24Hr).toFixed(2)}%</p>
+                    </div>
                 </div>
-                <div>test</div>
+                <div className="flex justify-around">
+                    <div>
+                        <p>Market Cap</p>
+                        <h1 className="text-2xl">${Number(coin.marketCapUsd).toFixed(2)}</h1>
+                    </div>
+                    <div>
+                        <p>Supply</p>
+                        <h1 className="text-2xl">{Number(coin.supply).toFixed(2)}</h1>
+                    </div>
+                    <div>
+                        <p>Volume Last 24HR</p>
+                        <h1 className="text-2xl">${Number(coin.volumeUsd24Hr).toFixed(2)}</h1>
+                    </div>
+                    <a className="p-2 border rounded-lg text-2xl border-primary bg-primary" target="_blank" href={coin.explorer}>Explorer</a>
+                </div>
             </div>
-            <div className="p-3">{coin.name}</div>
-            <div className="p-3">{coin.symbol}</div>
-            <div className="p-3">${Number(coin.priceUsd)}</div>
-            <div className="p-3">{Number(coin.changePercent24Hr).toFixed(2)}%</div>
-            <div className="p-3">${Number(coin.marketCapUsd).toFixed(2)}</div>
-            <br></br>
             <Graph data={ history }/>
         </div>
     )
 }
+// rank:"1"
