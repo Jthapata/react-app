@@ -1,9 +1,9 @@
 import Link from 'next/link'
 export default function Header() {
     return (
-        <div className="bg-slate-800 p-4 pl-9 flex">
+        <div className="bg-background p-4 pl-9 flex">
             <Link href="/" >
-                <h1 className="text-red-500 text-6xl">CryptOhs</h1>
+                <h1 className="bg-gradient-to-r from-primary to-secondary text-6xl text-transparent bg-clip-text p-1">CryptOhs</h1>
             </Link>
         </div>
     )

@@ -30,23 +30,23 @@ export default function CryptoList () {
 
     if (loading) {
         return (
-            <div className="flex-grow flex flex-col items-center border-black rounded-sm bg-slate-500 text-white p-3">
+            <div className="flex-grow flex flex-col items-center justify-center bg-background text-white p-3">
                 <h1>Loading...</h1>
             </div>
         )
     }
     if (error) {
         return (
-            <div className="flex-grow flex flex-col items-center border-black rounded-sm bg-slate-500 text-white p-3">
+            <div className="flex-grow flex flex-col items-center justify-center bg-background text-text p-3">
                 <h1>Error Loading Data</h1>
             </div>
         )
     }
     return (
-        <div className="flex-grow flex flex-col items-center bg-slate-500 text-white p-3">
-            <table className="border">
+        <div className="flex-grow flex flex-col items-center bg-background text-text p-3">
+            <table className="">
                 <thead>
-                    <tr className="bg-slate-600">
+                    <tr className="bg-primary">
                         <th className="p-3">Name</th>
                         <th className="p-3">Symbol</th>
                         <th className="p-3">Price</th>
@@ -56,7 +56,7 @@ export default function CryptoList () {
                 </thead>
                 <tbody>
                     {Object.keys(list).map((key) => (
-                        <tr key={list[key].id} className="hover:border text-center">
+                        <tr key={list[key].id} className="hover:border hover:rounded-sm hover:bg-primary text-center">
                             <td className="p-3"><Link href={`/${list[key].id}`}>{list[key].name}</Link></td>
                             <td className="p-3">{list[key].symbol}</td>
                             <td className="p-3">${Number(list[key].priceUsd.slice(0,8))}</td>

@@ -10,17 +10,31 @@ export default function Graph(props) {
     }
     return (
         <LineChart
-            series = {[{ data: [...priceUsd] }]}
+            sx={{
+                "& .MuiChartsAxis-left .MuiChartsAxis-tickLabel":{
+                    strokeWidth:1,
+                    fill:"#a222dd"
+                },
+                "& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":{
+                    strokeWidth:1,
+                    fill:"#a222dd"
+                },
+                "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
+                    stroke:"#a222dd",
+                    strokeWidth:1
+                },
+                "& .MuiChartsAxis-left .MuiChartsAxis-line":{
+                    stroke:"#a222dd",
+                    strokeWidth:1
+                }
+            }}
+            series = {[{ data: [...priceUsd], color: '#a222dd'}]}
             xAxis={[{ data: [...times], scaleType: 'point'}]}
             width={600}
             height={300}
+            axisHighlight={{
+                x: 'none',
+            }}
         />
     );
 }
-
-{/* <LineChart width={800} height={300} data={props.data} margin={{top: 5, right: 30, left: 20, bottom: 5}}>
-            <XAxis dataKey="time" stroke="white" />
-            <YAxis stroke="white" domain={['auto', 'auto']} width={100}/>
-            <Tooltip />
-            <Line type="monotone" dataKey="priceUsd" stroke="#EF4444" activeDot={{ r: 8 }} />
-        </LineChart> */}
