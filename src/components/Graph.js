@@ -9,38 +9,13 @@ export default function Graph(props) {
         times.push(item.time)
     }
     return (
+        <div>
         <LineChart
-            options={{
-                showMark: false
-            }}
-            sx={{
-                "& .MuiChartsAxis-left .MuiChartsAxis-tickLabel":{
-                    strokeWidth:1,
-                    fill:"#a222dd"
-                },
-                "& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":{
-                    strokeWidth:1,
-                    fill:"#a222dd"
-                },
-                "& .MuiChartsAxis-bottom .MuiChartsAxis-line":{
-                    stroke:"#a222dd",
-                    strokeWidth:1
-                },
-                "& .MuiChartsAxis-left .MuiChartsAxis-line":{
-                    stroke:"#a222dd",
-                    strokeWidth:1
-                },
-                "& .MuiChartsTooltip-mark": {
-                    display: "none",
-                }
-            }}
-            series = {[{ data: [...priceUsd], color: '#a222dd'}]}
+            series = {[{ data: [...priceUsd], color: '#000000'}]}
             xAxis={[{ data: [...times], scaleType: 'point'}]}
             width={600}
-            height={300}
-            axisHighlight={{
-                x: 'none',
-            }}
+            height={400}
         />
+        </div>
     );
 }
