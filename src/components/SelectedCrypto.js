@@ -59,7 +59,7 @@ export default function CryptoList (props) {
     }
     if (error) {
         return (
-           <Error />
+            <Error />
         )
     }
     return (
